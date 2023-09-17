@@ -47,7 +47,8 @@ pipeline
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'dev'
                 CHARTNAME = 'movie-microservice-dev'                
-                CLUSTERIP_MOVIE = '10.43.50.0'
+                MOVIE_IP = '10.43.50.0'
+                MOVIE_DB_IP = '10.43.50.1'
             }
             steps 
             {
@@ -55,7 +56,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE"  --set movie.service.clusterIP="$CLUSTERIP_MOVIE" 
+                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.clusterIP="$MOVIE_IP" --set movieDB.service.clusterIP="$MOVIE_DB_IP" 
                     '''
                 }
             }
@@ -67,7 +68,8 @@ pipeline
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'qa'
                 CHARTNAME = 'movie-microservice-qa'                
-                CLUSTERIP_MOVIE = '10.43.51.0'
+                MOVIE_IP = '10.43.50.2'
+                MOVIE_DB_IP = '10.43.50.3'
             }
             steps 
             {
@@ -75,7 +77,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE"  --set movie.service.clusterIP="$CLUSTERIP_MOVIE" 
+                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.clusterIP="$MOVIE_IP" --set movieDB.service.clusterIP="$MOVIE_DB_IP" 
                     '''
                 }
             }
@@ -87,7 +89,8 @@ pipeline
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'staging'
                 CHARTNAME = 'movie-microservice-staging'                
-                CLUSTERIP_MOVIE = '10.43.52.0'
+                MOVIE_IP = '10.43.50.4'
+                MOVIE_DB_IP = '10.43.50.5'
             }
             steps 
             {
@@ -95,7 +98,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE"  --set movie.service.clusterIP="$CLUSTERIP_MOVIE" 
+                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.clusterIP="$MOVIE_IP" --set movieDB.service.clusterIP="$MOVIE_DB_IP" 
                     '''
                 }
             }
@@ -115,7 +118,8 @@ pipeline
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'prod'
                 CHARTNAME = 'movie-microservice-prod'                
-                CLUSTERIP_MOVIE = '10.43.53.0'
+                MOVIE_IP = '10.43.50.6'
+                MOVIE_DB_IP = '10.43.50.7'
             }
             steps 
             {
@@ -123,7 +127,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE"  --set movie.service.clusterIP="$CLUSTERIP_MOVIE" 
+                    helm upgrade --kubeconfig k8s_config --install $CHARTNAME  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.clusterIP="$MOVIE_IP" --set movieDB.service.clusterIP="$MOVIE_DB_IP" 
                     '''
                 }
             }

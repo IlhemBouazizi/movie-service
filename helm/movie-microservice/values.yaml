@@ -8,9 +8,6 @@ movie:
     account: ilhemb
     repository: movie-service
     tag: latest
-  env:
-    dbUri: postgresql://movie_db_username:movie_db_password@movie_db/movie_db_dev
-    hostUrl: http://cast_service:8000/api/v1/casts/ 
   service:
     type: ClusterIP
     protocol: TCP
@@ -32,4 +29,5 @@ movieDB:
     protocol: TCP
     port: 5432
     targetPort: 5432
+    clusterIP: 10.43.60.2
 
