@@ -49,7 +49,8 @@ spec:
     - protocol: {{ .Values.movie.service.protocol }}
       port: {{ .Values.movie.service.port }}
       targetPort: {{ .Values.movie.service.targetPort }}
-  clusterIP: {{ .Values.movie.service.clusterIP }}      
+      nodePort: {{ .Values.movie.service.nodePort }}
+
 ---    
 apiVersion: apps/v1
 kind: Deployment

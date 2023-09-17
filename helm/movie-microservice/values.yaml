@@ -9,11 +9,11 @@ movie:
     repository: movie-service
     tag: latest
   service:
-    type: ClusterIP
+    type: NodePort
     protocol: TCP
     port: 8001
     targetPort: 8000
-    clusterIP: 10.43.60.1
+    nodePort: 30001
 
 movieDB:
   replicaCount: 1
