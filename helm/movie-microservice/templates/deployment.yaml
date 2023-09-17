@@ -21,9 +21,9 @@ spec:
             - containerPort: {{ .Values.movie.service.targetPort }}
           env:
             - name: DATABASE_URI
-              value: postgresql://movie_db_username:movie_db_password@{{ .Values.movieDB.service.clusterIP }}/{{ .Values.movieDB.env.movie_db_dev }}
+              value: postgresql://movie_db_username:movie_db_password@{{ .Values.movieDB.service.clusterIP }}/{{ .Values.movieDB.env.dbName }}
             - name: CAST_SERVICE_HOST_URL
-              value: {{ .Values.movieDB.service.clusterIP }}:{{ .Values.movieDB.service.port }}/api/v1/movies/
+              value:  http://{{ .Values.movie.service.clusterIP }}:{{ .Values.movie.service.port }}/api/v1/movies/
           volumeMounts:
             - name: movie-volume
               mountPath: {{ .Values.movie.mountPath }}
