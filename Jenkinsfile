@@ -60,6 +60,23 @@ pipeline
                 }
             }
         }
+        stage('Test deploiement en dev')
+        {    
+            environment
+            {
+                MOVIE_NODEPORT = '30000'
+            }
+            steps 
+            {
+                script 
+                {
+                    sh '''
+                    sleep 60
+                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    '''
+                }
+            }            
+        }
         stage('Deploiement en qa')
         {
             environment
@@ -80,6 +97,23 @@ pipeline
                 }
             }
         }
+        stage('Test deploiement en qa')
+        {    
+            environment
+            {
+                MOVIE_NODEPORT = '30001'
+            }
+            steps 
+            {
+                script 
+                {
+                    sh '''
+                    sleep 60
+                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    '''
+                }
+            }            
+        }        
         stage('Deploiement en staging')
         {
             environment
@@ -100,12 +134,25 @@ pipeline
                 }
             }
         }
+        stage('Test deploiement en staging')
+        {    
+            environment
+            {
+                MOVIE_NODEPORT = '30002'
+            }
+            steps 
+            {
+                script 
+                {
+                    sh '''
+                    sleep 60
+                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    '''
+                }
+            }            
+        }        
         stage('Deploiement en prod')
         {
-            when 
-            {
-                branch 'master'
-            }            
             input
             {
                 message "Confirmer le deployment en prod"
@@ -128,5 +175,22 @@ pipeline
                 }
             }
         }
+        stage('Test deploiement en prod')
+        {    
+            environment
+            {
+                MOVIE_NODEPORT = '30003'
+            }
+            steps 
+            {
+                script 
+                {
+                    sh '''
+                    sleep 60
+                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    '''
+                }
+            }            
+        }        
     }
 }
