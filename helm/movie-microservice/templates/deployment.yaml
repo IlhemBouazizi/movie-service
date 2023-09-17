@@ -105,4 +105,4 @@ spec:
     - protocol: {{ .Values.movieDB.service.protocol }}
       port: {{ .Values.movieDB.service.port }}
       targetPort: {{ .Values.movieDB.service.targetPort }}
-      clusterIP: {{ .Values.movieDB.service.clusterIP }}      
+  clusterIP: {{ .Values.movieDB.service.clusterIP }}      
