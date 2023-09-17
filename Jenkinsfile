@@ -46,8 +46,8 @@ pipeline
             {
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'dev'
-                MOVIE_NODEPORT = '30000'
-                MOVIE_DB_IP = '10.43.50.0'
+                NODEPORT = '30000'
+                DB_IP = '10.43.50.0'
             }
             steps 
             {
@@ -55,7 +55,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$MOVIE_NODEPORT" --set movieDB.service.clusterIP="$MOVIE_DB_IP"
+                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$NODEPORT" --set movieDB.service.clusterIP="$DB_IP"
                     '''
                 }
             }
@@ -64,7 +64,7 @@ pipeline
         {    
             environment
             {
-                MOVIE_NODEPORT = '30000'
+                NODEPORT = '30000'
             }
             steps 
             {
@@ -72,7 +72,7 @@ pipeline
                 {
                     sh '''
                     sleep 60
-                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    curl "http://localhost:$NODEPORT/api/v1/movies/docs"
                     '''
                 }
             }            
@@ -83,8 +83,8 @@ pipeline
             {
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'qa'
-                MOVIE_NODEPORT = '30001'
-                MOVIE_DB_IP = '10.43.50.1'
+                NODEPORT = '30001'
+                DB_IP = '10.43.50.1'
             }
             steps 
             {
@@ -92,7 +92,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$MOVIE_NODEPORT" --set movieDB.service.clusterIP="$MOVIE_DB_IP"
+                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$NODEPORT" --set movieDB.service.clusterIP="$DB_IP"
                     '''
                 }
             }
@@ -101,7 +101,7 @@ pipeline
         {    
             environment
             {
-                MOVIE_NODEPORT = '30001'
+                NODEPORT = '30001'
             }
             steps 
             {
@@ -109,7 +109,7 @@ pipeline
                 {
                     sh '''
                     sleep 60
-                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    curl "http://localhost:$NODEPORT/api/v1/movies/docs"
                     '''
                 }
             }            
@@ -120,8 +120,8 @@ pipeline
             {
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'staging'
-                MOVIE_NODEPORT = '30002'
-                MOVIE_DB_IP = '10.43.50.2'
+                NODEPORT = '30002'
+                DB_IP = '10.43.50.2'
             }
             steps 
             {
@@ -129,7 +129,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$MOVIE_NODEPORT" --set movieDB.service.clusterIP="$MOVIE_DB_IP"
+                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$NODEPORT" --set movieDB.service.clusterIP="$DB_IP"
                     '''
                 }
             }
@@ -138,7 +138,7 @@ pipeline
         {    
             environment
             {
-                MOVIE_NODEPORT = '30002'
+                NODEPORT = '30002'
             }
             steps 
             {
@@ -146,7 +146,7 @@ pipeline
                 {
                     sh '''
                     sleep 60
-                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    curl "http://localhost:$NODEPORT/api/v1/movies/docs"
                     '''
                 }
             }            
@@ -165,8 +165,8 @@ pipeline
             {
                 KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
                 NAMESPACE = 'prod'
-                MOVIE_NODEPORT = '30003'
-                MOVIE_DB_IP = '10.43.50.3'
+                NODEPORT = '30003'
+                DB_IP = '10.43.50.3'
             }
             steps 
             {
@@ -174,7 +174,7 @@ pipeline
                 {
                     sh '''
                     cat $KUBECONFIG > k8s_config
-                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$MOVIE_NODEPORT" --set movieDB.service.clusterIP="$MOVIE_DB_IP"
+                    helm upgrade --kubeconfig k8s_config --install movie-microservice-$NAMESPACE  helm/movie-microservice/ --values=helm/movie-microservice/values.yaml --set nameSpace="$NAMESPACE" --set movie.service.nodePort="$NODEPORT" --set movieDB.service.clusterIP="$DB_IP"
                     '''
                 }
             }
@@ -184,10 +184,14 @@ pipeline
             when 
             {
                 branch 'master'
-            }            
+            }
+            input
+            {
+                message "Confirmer le test en prod"
+            }                        
             environment
             {
-                MOVIE_NODEPORT = '30003'
+                NODEPORT = '30003'
             }
             steps 
             {
@@ -195,7 +199,7 @@ pipeline
                 {
                     sh '''
                     sleep 60
-                    curl "http://localhost:$MOVIE_NODEPORT/api/v1/movies/docs"
+                    curl "http://localhost:$NODEPORT/api/v1/movies/docs"
                     '''
                 }
             }            
